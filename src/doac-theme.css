@@ -236,19 +236,34 @@ body:has(.landing--doac)::selection {
   }
 }
 
-/* --- Hero : pleine hauteur, défile avec la page — voile sombre sur la photo --- */
-.doac-hero {
+/* --- Hero fixe : la section suivante passe par-dessus ; spacer = hauteur de scroll du 1er écran --- */
+.doac-hero-shell {
   position: relative;
+}
+
+.doac-hero-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
   z-index: 1;
   isolation: isolate;
-  /* vh puis svh : compat navigateurs + repli si unité inconnue */
-  min-height: 100vh;
-  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   background-color: #120507;
+}
+
+.doac-hero-spacer {
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
+  width: 100%;
+  pointer-events: none;
 }
 
 .doac-hero__bg-img {
@@ -340,7 +355,7 @@ body:has(.landing--doac)::selection {
  */
 .doac-intro-parallax {
   position: relative;
-  /* plus de z-index « au-dessus » du hero : le hero n’est plus fixed */
+  z-index: 4;
   min-height: 560px;
   display: flex;
   align-items: center;
