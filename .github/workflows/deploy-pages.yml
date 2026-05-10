@@ -34,6 +34,10 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+        env:
+          VITE_ACCESS_CODES: TSF2026
+          # Optionnel : Settings → Secrets → ajouter VITE_CALENDLY_URL pour l’iframe booking
+          VITE_CALENDLY_URL: ${{ secrets.VITE_CALENDLY_URL }}
 
       - name: Vérifier que le build est bien la prod (pas src/main.tsx)
         run: |
