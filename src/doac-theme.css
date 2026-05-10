@@ -244,9 +244,7 @@ body:has(.landing--doac)::selection {
  */
 .doac-hero-shell {
   position: relative;
-  background-color: #000000;
-  min-height: 90vh;
-  min-height: 90svh;
+  background-color: var(--doac-black);
 }
 
 .doac-hero__fixed-bg {
@@ -258,7 +256,7 @@ body:has(.landing--doac)::selection {
   height: 100svh;
   z-index: 0;
   overflow: hidden;
-  background-color: #000000;
+  background-color: #120507;
   pointer-events: none;
 }
 
@@ -282,13 +280,14 @@ body:has(.landing--doac)::selection {
   position: absolute;
   inset: 0;
   z-index: 1;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.78) 28%,
+    rgba(0, 0, 0, 0.5) 55%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
   pointer-events: none;
-  /* Profondeur : vignette + lecture gauche (image fixe inchangée, seul le voile évolue) */
-  background:
-    radial-gradient(ellipse 85% 75% at 18% 45%, rgba(0, 0, 0, 0.15) 0%, transparent 55%),
-    radial-gradient(ellipse 120% 90% at 100% 50%, rgba(0, 0, 0, 0.55) 0%, transparent 50%),
-    linear-gradient(105deg, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 0.72) 38%, rgba(0, 0, 0, 0.45) 62%, rgba(0, 0, 0, 0.75) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, transparent 35%, transparent 65%, rgba(0, 0, 0, 0.88) 100%);
 }
 
 .doac-hero__foreground {
@@ -296,121 +295,69 @@ body:has(.landing--doac)::selection {
   z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  min-height: 90vh;
-  min-height: 90svh;
-  padding-top: clamp(4.5rem, 10vh, 7rem);
-  padding-bottom: clamp(1.75rem, 4vh, 2.75rem);
-  padding-left: clamp(1.5rem, 5vw, 4.5rem);
-  padding-right: clamp(1.25rem, 4vw, 3rem);
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(5rem, 12vh, 7rem) 1rem 0;
 }
 
-.doac-hero__main {
+.doac-hero__inner {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 0;
-}
-
-.doac-hero__copy {
   width: 100%;
-  max-width: min(22ch, 92vw);
-  text-align: left;
+  text-align: center;
 }
 
 .doac-hero__title {
   margin: 0;
-  font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
-  font-size: clamp(3.75rem, 16.5vw, 11.5rem);
-  line-height: 0.86;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-family: var(--doac-font-display);
+  font-size: clamp(3.25rem, 13vw, 10rem);
+  line-height: 0.92;
+  font-weight: 700;
   color: #fff;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   text-shadow:
-    0 4px 48px rgba(0, 0, 0, 0.65),
-    0 1px 0 rgba(0, 0, 0, 0.4);
-}
-
-.doac-hero__title-line {
-  display: block;
-}
-
-.doac-hero__title-line--accent {
-  color: #e50914;
+    0 2px 28px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .doac-hero__scroll {
   position: relative;
   flex-shrink: 0;
-  align-self: flex-start;
-  display: inline-flex;
+  width: 100%;
+  height: 100px;
+  display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
-  margin-top: clamp(2.5rem, 6vh, 4.5rem);
-  padding-top: 0.5rem;
-  padding-bottom: 0.75rem;
-  padding-left: 0.06em;
-  min-height: 3.5rem;
-  font-family: "Bebas Neue", var(--doac-font-display), sans-serif;
-  font-size: clamp(1rem, 2.2vw, 1.4rem);
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.72);
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  font-family: var(--doac-font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: #fff;
   text-decoration: none;
   text-transform: uppercase;
-  transition: color 0.2s ease;
-}
-
-.doac-hero__scroll:hover {
-  color: rgba(255, 255, 255, 0.95);
+  text-shadow:
+    0 0 16px rgba(0, 0, 0, 0.65),
+    0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 .doac-hero__scroll::before {
   content: "";
   position: absolute;
-  left: 0.06em;
-  top: 2.25rem;
-  width: 20px;
-  height: 20px;
+  left: 50%;
+  top: 52px;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
   border-right: 2px solid var(--doac-accent);
   border-bottom: 2px solid var(--doac-accent);
   transform: rotate(45deg);
-}
-
-@media (max-width: 767px) {
-  .doac-hero__foreground {
-    padding-left: clamp(1.15rem, 5vw, 1.5rem);
-    padding-right: clamp(1.15rem, 5vw, 1.5rem);
-    padding-top: clamp(4rem, 11vh, 5.5rem);
-  }
-
-  .doac-hero__copy {
-    max-width: 100%;
-  }
-
-  .doac-hero__title {
-    font-size: clamp(3.1rem, 14vw, 4.5rem);
-    line-height: 0.88;
-    letter-spacing: 0.025em;
-  }
-
-  .doac-hero__scroll {
-    margin-top: clamp(2rem, 5vh, 3rem);
-    font-size: 0.95rem;
-    letter-spacing: 0.12em;
-  }
-
-  .doac-hero__scroll::before {
-    top: 2rem;
-    width: 18px;
-    height: 18px;
-  }
 }
 
 /*
