@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { episodes } from "../data/tsf";
+import { CONCEPT_BG_EXTENSIONS, CONCEPT_INTRO_BASE, conceptBackgroundUrl } from "../lib/conceptBg";
 
 const fallbackThumb =
   episodes[0] != null
@@ -10,15 +11,15 @@ const fallbackThumb =
  * Même principe que stevenbartlett.com/doac/ :
  * — calque image + voile en position fixed (reste « collé » au viewport)
  * — titre + lien Scroll dans le flux : ils montent avec le scroll
+ * Fond : même visuel que le panneau intro de la section Concept (`images/concept/intro.*`).
  */
 export function Hero() {
   const base = import.meta.env.BASE_URL;
-  /** GitHub Pages (Linux) est sensible à la casse : essai hero.jpg puis Hero.jpg puis vignette. */
   const urls = useMemo(() => {
-    const tries = [`${base}images/hero.jpg`, `${base}images/Hero.jpg`];
-    if (fallbackThumb) tries.push(fallbackThumb);
-    return tries.filter(Boolean);
-  }, [base]);
+    const intro = CONCEPT_BG_EXTENSIONS.map((_, i) => conceptBackgroundUrl(CONCEPT_INTRO_BASE, i));
+    if (fallbackThumb) intro.push(fallbackThumb);
+    return intro;
+  }, [base, fallbackThumb]);
   const [idx, setIdx] = useState(0);
   const safeIdx = Math.min(idx, Math.max(0, urls.length - 1));
   const src = urls[safeIdx] ?? urls[urls.length - 1] ?? "";

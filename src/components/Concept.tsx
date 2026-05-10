@@ -3,6 +3,7 @@ import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { CONCEPT_BG_EXTENSIONS, CONCEPT_INTRO_BASE, conceptBackgroundUrl } from "../lib/conceptBg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,16 +42,11 @@ const CHAPTERS = [
   },
 ] as const;
 
-/** Ordre d’essai ; `.jpeg` en premier pour éviter un 404 inutile si tu n’as que des JPEG. */
-const BG_EXT = ["jpeg", "jpg", "webp", "png"] as const;
-
 /** Image plein cadre + voile sombre. Essaie plusieurs extensions + rafraîchit ScrollTrigger au chargement. */
 function ConceptPanelBg({ fileBase }: { fileBase: string }) {
   const [extIndex, setExtIndex] = useState(0);
   const [givenUp, setGivenUp] = useState(false);
-  const safeBase = fileBase.toLowerCase();
-  const ext = BG_EXT[Math.min(extIndex, BG_EXT.length - 1)];
-  const src = `${import.meta.env.BASE_URL}images/concept/${safeBase}.${ext}`;
+  const src = conceptBackgroundUrl(fileBase, extIndex);
 
   return (
     <div className="concept-hscroll__backdrop">
@@ -67,7 +63,7 @@ function ConceptPanelBg({ fileBase }: { fileBase: string }) {
           }}
           onError={() => {
             setExtIndex((current) => {
-              if (current < BG_EXT.length - 1) return current + 1;
+              if (current < CONCEPT_BG_EXTENSIONS.length - 1) return current + 1;
               queueMicrotask(() => setGivenUp(true));
               return current;
             });
@@ -157,7 +153,7 @@ export function Concept() {
       <div ref={pinRef} className="concept-hscroll__pin">
         <div ref={trackRef} className="concept-hscroll__track">
           <div className="concept-hscroll__panel concept-hscroll__panel--intro">
-            <ConceptPanelBg fileBase="intro" />
+            <ConceptPanelBg fileBase={CONCEPT_INTRO_BASE} />
             <div className="concept-hscroll__panel-stack">
               <div className="concept-hscroll__panel-inner">
                 <p className="concept-hscroll__doctrine">Une doctrine de studio</p>
