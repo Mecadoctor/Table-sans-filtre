@@ -13,6 +13,7 @@ const thumbs = episodes.map((e) => ({
 
 function rowCells(start: number, repeat: number) {
   const out: typeof thumbs = [];
+  if (thumbs.length === 0) return out;
   for (let i = 0; i < repeat; i++) {
     const t = thumbs[(start + i) % thumbs.length];
     out.push(t);
@@ -29,19 +30,24 @@ export function DoacIntro() {
   useGSAP(
     () => {
       if (!rootRef.current || !row1Ref.current || !row2Ref.current || !row3Ref.current) return;
+      if (thumbs.length === 0) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const trigger = rootRef.current;
-      const st = () => ({
-        trigger,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.2,
-      });
+      try {
+        const trigger = rootRef.current;
+        const st = () => ({
+          trigger,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.2,
+        });
 
-      gsap.fromTo(row1Ref.current, { x: "-12%" }, { x: "14%", scrollTrigger: st() });
-      gsap.fromTo(row2Ref.current, { x: "12%" }, { x: "-16%", scrollTrigger: st() });
-      gsap.fromTo(row3Ref.current, { x: "-10%" }, { x: "12%", scrollTrigger: st() });
+        gsap.fromTo(row1Ref.current, { x: "-12%" }, { x: "14%", scrollTrigger: st() });
+        gsap.fromTo(row2Ref.current, { x: "12%" }, { x: "-16%", scrollTrigger: st() });
+        gsap.fromTo(row3Ref.current, { x: "-10%" }, { x: "12%", scrollTrigger: st() });
+      } catch {
+        /* évite un écran blanc si GSAP / ScrollTrigger échoue sur un navigateur */
+      }
     },
     { scope: rootRef },
   );

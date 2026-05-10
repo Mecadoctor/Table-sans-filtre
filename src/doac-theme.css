@@ -24,6 +24,11 @@ body:has(.landing--doac)::selection {
   color: #fff;
 }
 
+/* Le hero est en position:fixed ; overflow-x:clip sur .landing découpe tout le viewport → page vide sur certains navigateurs */
+.landing--doac.landing--podcast {
+  overflow-x: visible;
+}
+
 /* --- Nav --- */
 .doac-nav {
   position: fixed;
@@ -414,8 +419,6 @@ body:has(.landing--doac)::selection {
   gap: clamp(10px, 1.5vw, 14px);
   min-height: 0;
   padding: 0.25rem 0;
-  container-type: inline-size;
-  container-name: intro-visual;
 }
 
 .doac-parallax-band {
@@ -429,8 +432,8 @@ body:has(.landing--doac)::selection {
 .doac-parallax-band__cell {
   position: relative;
   flex: 0 0 auto;
-  /* ~4 vignettes visibles dans la colonne droite (comme la capture DOAC) */
-  width: clamp(142px, calc((100cqi - 42px) / 4), 220px);
+  /* ~4 vignettes visibles par ligne dans la moitié droite (sans container queries pour compatibilité) */
+  width: clamp(148px, 11vw, 210px);
   aspect-ratio: 16 / 10;
   border-radius: 18px;
   overflow: hidden;
@@ -474,7 +477,7 @@ body:has(.landing--doac)::selection {
   }
 
   .doac-parallax-band__cell {
-    width: clamp(128px, calc((100cqi - 36px) / 4), 168px);
+    width: clamp(128px, 22vw, 168px);
   }
 }
 
