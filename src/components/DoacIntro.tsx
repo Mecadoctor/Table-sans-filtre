@@ -108,7 +108,7 @@ export function DoacIntro() {
             <span className="doac-intro-parallax__brand">La Table Sans Filtre</span>
             <span className="doac-intro-parallax__title-text">
               {" "}
-              est une conversation sans langue de bois avec des leaders qui façonnent la région — des récits où l’on démonte les angles morts du succès.
+              est une conversation sans langue de bois avec des leaders qui façonnent la région
             </span>
           </h2>
           <p className="doac-intro-parallax__subtitle">

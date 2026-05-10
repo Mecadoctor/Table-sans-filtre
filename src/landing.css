@@ -12,8 +12,8 @@
   --radius-lg: 18px;
   --radius-xl: 28px;
   --maxw: 1140px;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-ui: Outfit, system-ui, sans-serif;
+  --font-display: "Zuume", sans-serif;
+  --font-ui: "Zuume", sans-serif;
 }
 
 /* --- Utilities --- */
