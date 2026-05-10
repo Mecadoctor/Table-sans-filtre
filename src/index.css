@@ -11,6 +11,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* même fond que body : évite les bandes / flash blanc autour du viewport */
+  background-color: var(--bg-root);
 }
 
 @media (prefers-reduced-motion: reduce) {

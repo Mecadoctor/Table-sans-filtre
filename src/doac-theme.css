@@ -244,6 +244,7 @@ body:has(.landing--doac)::selection {
  */
 .doac-hero-shell {
   position: relative;
+  background-color: var(--doac-black);
 }
 
 .doac-hero__fixed-bg {
@@ -950,7 +951,6 @@ body:has(.landing--doac)::selection {
 .concept-mbc__chapters {
   display: flex;
   flex-direction: column;
-  perspective: 1200px;
 }
 
 .concept-mbc__chapter {
