@@ -594,7 +594,7 @@ body:has(.landing--doac)::selection {
 
 .doac-intro-parallax__content {
   position: relative;
-  max-width: 58.333333%;
+  max-width: min(72%, 44rem);
   text-align: left;
 }
 
@@ -608,8 +608,8 @@ body:has(.landing--doac)::selection {
   margin: 0 0 1.25rem;
   font-family: var(--doac-font-display);
   font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.08;
+  font-size: 1.65rem;
+  line-height: 1.14;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
@@ -618,7 +618,7 @@ body:has(.landing--doac)::selection {
 
 @media (min-width: 992px) {
   .doac-intro-parallax__title {
-    font-size: 3.125rem;
+    font-size: 2.45rem;
   }
 }
 
@@ -636,8 +636,8 @@ body:has(.landing--doac)::selection {
   .doac-intro-parallax__title {
     margin-top: 1rem;
     text-transform: none;
-    font-size: clamp(1.12rem, 4.15vw, 1.35rem);
-    line-height: 1.48;
+    font-size: clamp(1rem, 3.65vw, 1.22rem);
+    line-height: 1.52;
     letter-spacing: 0.015em;
     font-weight: 400;
   }
@@ -645,10 +645,10 @@ body:has(.landing--doac)::selection {
   .doac-intro-parallax__brand {
     display: block;
     margin-bottom: 0.65rem;
-    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+    font-size: clamp(0.76rem, 2.9vw, 0.88rem);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    line-height: 1.25;
+    line-height: 1.28;
   }
 
   .doac-intro-parallax__title-text {
