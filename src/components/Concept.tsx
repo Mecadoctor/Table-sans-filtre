@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Comportement type MadeByCat « Technology solutions » :
  * scroll vertical → piste horizontale : chaque plein écran vient de la droite.
- * @see https://madebycat.com/
+ * Fonds : public/images/concept/ — voir README dans ce dossier.
  */
 const CHAPTERS = [
   {
@@ -19,6 +19,7 @@ const CHAPTERS = [
     d: "Du vrai. Des décisions. Des erreurs. Des leçons.",
     stat: "12+",
     statLabel: "épisodes publiés",
+    bgFile: "chapter-01",
   },
   {
     label: "Humain derrière le titre",
@@ -27,6 +28,7 @@ const CHAPTERS = [
     d: "Ce qui a construit le parcours — pas seulement le résultat.",
     stat: "100%",
     statLabel: "authenticité",
+    bgFile: "chapter-02",
   },
   {
     label: "Région & impact",
@@ -35,8 +37,35 @@ const CHAPTERS = [
     d: "Entrepreneuriat, politique, sport, arts — des leaders qui comptent.",
     stat: "1",
     statLabel: "conversation sans filtre",
+    bgFile: "chapter-03",
   },
 ] as const;
+
+function bgUrl(fileBase: string): string {
+  return `${import.meta.env.BASE_URL}images/concept/${fileBase}.jpg`;
+}
+
+/** Image plein cadre + voile sombre ; si le fichier manque, fond uni. */
+function ConceptPanelBg({ fileBase }: { fileBase: string }) {
+  const [hideImg, setHideImg] = useState(false);
+  const src = bgUrl(fileBase);
+
+  return (
+    <div className="concept-hscroll__backdrop">
+      {!hideImg && (
+        <img
+          src={src}
+          alt=""
+          className="concept-hscroll__backdrop-img"
+          loading="lazy"
+          decoding="async"
+          onError={() => setHideImg(true)}
+        />
+      )}
+      <div className="concept-hscroll__backdrop-scrim" aria-hidden />
+    </div>
+  );
+}
 
 function ConceptScrollFallback() {
   return (
@@ -51,10 +80,13 @@ function ConceptScrollFallback() {
           Trois axes qui définissent chaque épisode — comme une ligne directrice, sans posture de façade.
         </p>
         {CHAPTERS.map((x, i) => (
-          <article key={x.label} className="concept-hscroll__static-card">
-            <span className="concept-hscroll__chapter-label">CHAPITRE · {String(i + 1).padStart(2, "0")}</span>
-            <h3 className="concept-hscroll__chapter-h">{x.headlineA}</h3>
-            <p className="concept-hscroll__chapter-p">{x.d}</p>
+          <article key={x.label} className="concept-hscroll__static-card concept-hscroll__static-card--bg">
+            <ConceptPanelBg fileBase={x.bgFile} />
+            <div className="concept-hscroll__static-card-inner">
+              <span className="concept-hscroll__chapter-kicker">CHAPITRE · {String(i + 1).padStart(2, "0")}</span>
+              <h3 className="concept-hscroll__chapter-h">{x.headlineA}</h3>
+              <p className="concept-hscroll__chapter-p">{x.d}</p>
+            </div>
           </article>
         ))}
       </div>
@@ -112,20 +144,22 @@ export function Concept() {
     <section className="section section--tsf concept-hscroll" id="concept" aria-labelledby="concept-title">
       <div ref={pinRef} className="concept-hscroll__pin">
         <div ref={trackRef} className="concept-hscroll__track">
-          {/* Écran d’accueil « doctrine » */}
           <div className="concept-hscroll__panel concept-hscroll__panel--intro">
-            <div className="concept-hscroll__panel-inner">
-              <p className="concept-hscroll__doctrine">Une doctrine de studio</p>
-              <p className="concept-hscroll__doctrine-lead">
-                Trois chapitres — un même credo : podcast, vidéo, région.
-              </p>
-              <h2 id="concept-title" className="concept-hscroll__hero-title">
-                <span className="concept-hscroll__hero-line">Une conversation vraie,</span>
-                <span className="concept-hscroll__hero-line concept-hscroll__hero-line--accent">sans PR-talk</span>
-              </h2>
-              <p className="concept-hscroll__hero-lead">
-                Trois axes qui définissent chaque épisode — comme une ligne directrice, sans posture de façade.
-              </p>
+            <ConceptPanelBg fileBase="intro" />
+            <div className="concept-hscroll__panel-stack">
+              <div className="concept-hscroll__panel-inner">
+                <p className="concept-hscroll__doctrine">Une doctrine de studio</p>
+                <p className="concept-hscroll__doctrine-lead">
+                  Trois chapitres — un même credo : podcast, vidéo, région.
+                </p>
+                <h2 id="concept-title" className="concept-hscroll__hero-title">
+                  <span className="concept-hscroll__hero-line">Une conversation vraie,</span>
+                  <span className="concept-hscroll__hero-line concept-hscroll__hero-line--accent">sans PR-talk</span>
+                </h2>
+                <p className="concept-hscroll__hero-lead">
+                  Trois axes qui définissent chaque épisode — comme une ligne directrice, sans posture de façade.
+                </p>
+              </div>
             </div>
             <p className="concept-hscroll__scroll-hint" aria-hidden="true">
               CONTINUE SCROLLING — LES CHAPITRES DÉFILENT SUR LE CÔTÉ →
@@ -134,28 +168,31 @@ export function Concept() {
 
           {CHAPTERS.map((x, i) => (
             <div key={x.label} className="concept-hscroll__panel concept-hscroll__panel--chapter">
-              <div className="concept-hscroll__chapter-layout">
-                <div className="concept-hscroll__chapter-copy">
-                  <p className="concept-hscroll__chapter-kicker">
-                    CHAPITRE · {String(i + 1).padStart(2, "0")} · {x.label.toUpperCase()}
-                  </p>
-                  <h3 className="concept-hscroll__chapter-title">
-                    <span className="concept-hscroll__chapter-title-a">{x.headlineA}</span>
-                    <span className="concept-hscroll__chapter-title-b">{x.headlineB}</span>
-                  </h3>
-                  <p className="concept-hscroll__chapter-desc">{x.d}</p>
-                  <p className="concept-hscroll__chapter-tags">PODCAST · VIDÉO · RÉGION</p>
+              <ConceptPanelBg fileBase={x.bgFile} />
+              <div className="concept-hscroll__panel-stack concept-hscroll__panel-stack--chapter">
+                <div className="concept-hscroll__chapter-layout">
+                  <div className="concept-hscroll__chapter-copy">
+                    <p className="concept-hscroll__chapter-kicker">
+                      CHAPITRE · {String(i + 1).padStart(2, "0")} · {x.label.toUpperCase()}
+                    </p>
+                    <h3 className="concept-hscroll__chapter-title">
+                      <span className="concept-hscroll__chapter-title-a">{x.headlineA}</span>
+                      <span className="concept-hscroll__chapter-title-b">{x.headlineB}</span>
+                    </h3>
+                    <p className="concept-hscroll__chapter-desc">{x.d}</p>
+                    <p className="concept-hscroll__chapter-tags">PODCAST · VIDÉO · RÉGION</p>
+                  </div>
+                  <aside className="concept-hscroll__stat-card" aria-hidden="true">
+                    <span className="concept-hscroll__stat-kicker">EN BREF</span>
+                    <p className="concept-hscroll__stat-big">
+                      <span className="concept-hscroll__stat-num">{x.stat}</span>
+                      <span className="concept-hscroll__stat-unit">{x.statLabel}</span>
+                    </p>
+                    <p className="concept-hscroll__stat-foot">
+                      <span className="concept-hscroll__stat-dot" /> LA TABLE SANS FILTRE
+                    </p>
+                  </aside>
                 </div>
-                <aside className="concept-hscroll__stat-card" aria-hidden="true">
-                  <span className="concept-hscroll__stat-kicker">EN BREF</span>
-                  <p className="concept-hscroll__stat-big">
-                    <span className="concept-hscroll__stat-num">{x.stat}</span>
-                    <span className="concept-hscroll__stat-unit">{x.statLabel}</span>
-                  </p>
-                  <p className="concept-hscroll__stat-foot">
-                    <span className="concept-hscroll__stat-dot" /> LA TABLE SANS FILTRE
-                  </p>
-                </aside>
               </div>
             </div>
           ))}

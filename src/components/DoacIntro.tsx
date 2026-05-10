@@ -105,7 +105,11 @@ export function DoacIntro() {
       <div className="doac-intro-parallax__container">
         <div className="doac-intro-parallax__content">
           <h2 id="doac-intro-title" className="doac-intro-parallax__title">
-            <span className="doac-intro-parallax__brand">La Table Sans Filtre</span> est une conversation sans langue de bois avec des leaders qui façonnent la région — des récits où l’on démonte les angles morts du succès.
+            <span className="doac-intro-parallax__brand">La Table Sans Filtre</span>
+            <span className="doac-intro-parallax__title-text">
+              {" "}
+              est une conversation sans langue de bois avec des leaders qui façonnent la région — des récits où l’on démonte les angles morts du succès.
+            </span>
           </h2>
           <p className="doac-intro-parallax__subtitle">
             Alex Rizk installe un cadre confiant : pas de posture de façade, du temps pour les idées qui comptent, et des échanges pensés pour nourrir celles et ceux qui construisent au quotidien.
