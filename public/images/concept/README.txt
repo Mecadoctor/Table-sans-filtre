@@ -7,7 +7,9 @@ Ils sont copiés tels quels dans dist/ au build (GitHub Pages inclus).
 
 Fichiers attendus (noms exacts, minuscules recommandées)
 ---------------------------------------------------------
-  intro           → fond du Hero (haut de page)
+  intro           → fond du Hero (haut de page), desktop et fallback mobile
+  intro-mobile    → optionnel : Hero sur téléphone (largeur ≤768px) ; ratio portrait ou 4∶5 conseillé (ex. 1080×1350).
+                     Si absent, le site utilise `intro.*` + recadrage CSS (object-position).
   chapter-5         → 1er panneau du défilement (« Une conversation vraie, sans PR-talk »)
                       (synonymes essayés : chapter-05, chapter5 — même extensions)
   chapter-01      → chapitre « Sans filtre »

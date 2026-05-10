@@ -35,17 +35,17 @@ export function DoacIntro() {
 
       try {
         const trigger = rootRef.current;
-        /* scrub plus élevé = translation plus douce / moins « nerveuse » */
+        /* scrub élevé = suivi du scroll plus lent et plus fluide ; petites amplitudes = déplacement doux */
         const st = () => ({
           trigger,
           start: "top bottom",
           end: "bottom top",
-          scrub: 3.2,
+          scrub: 9,
         });
 
-        gsap.fromTo(row1Ref.current, { x: "-8%" }, { x: "10%", scrollTrigger: st() });
-        gsap.fromTo(row2Ref.current, { x: "8%" }, { x: "-11%", scrollTrigger: st() });
-        gsap.fromTo(row3Ref.current, { x: "-7%" }, { x: "9%", scrollTrigger: st() });
+        gsap.fromTo(row1Ref.current, { x: "-5%" }, { x: "6%", scrollTrigger: st() });
+        gsap.fromTo(row2Ref.current, { x: "5%" }, { x: "-7%", scrollTrigger: st() });
+        gsap.fromTo(row3Ref.current, { x: "-4.5%" }, { x: "5.5%", scrollTrigger: st() });
       } catch {
         /* ScrollTrigger optionnel */
       }

@@ -4,6 +4,9 @@ export const CONCEPT_BG_EXTENSIONS = ["jpeg", "jpg", "webp", "png"] as const;
 /** Fond du Hero (fixe en haut de page) : `intro.*` */
 export const CONCEPT_INTRO_BASE = "intro";
 
+/** Optionnel — Hero sur étroit (<768px) : recadrage portrait ; sinon retombée sur `intro.*`. */
+export const CONCEPT_INTRO_MOBILE_BASE = "intro-mobile";
+
 /** 1er panneau du défilement Concept (« Une conversation vraie… ») : `chapter-5.*` (pas le Hero). */
 export const CONCEPT_OPEN_PANEL_BASE = "chapter-5";
 

@@ -269,6 +269,13 @@ body:has(.landing--doac)::selection {
   object-position: center center;
 }
 
+@media (max-width: 767px) {
+  .doac-hero__fixed-bg .doac-hero__bg-img {
+    /* Une seule image paysage : mieux voir le sujet en portrait sans fichier séparé */
+    object-position: center 30%;
+  }
+}
+
 .doac-hero__gradient {
   position: absolute;
   inset: 0;
