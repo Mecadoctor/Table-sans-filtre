@@ -31,7 +31,8 @@
 
 .landing--podcast {
   position: relative;
-  overflow-x: clip;
+  /* clip cassait position:fixed du hero + rendait la page invisible sur plusieurs navigateurs */
+  overflow-x: visible;
 }
 
 /* --- Nav --- */

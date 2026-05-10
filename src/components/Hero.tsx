@@ -16,7 +16,7 @@ export function Hero() {
   }, [base]);
   const [idx, setIdx] = useState(0);
   const safeIdx = Math.min(idx, Math.max(0, urls.length - 1));
-  const src = urls[safeIdx] ?? "";
+  const src = urls[safeIdx] ?? urls[urls.length - 1] ?? "";
 
   return (
     <section className="doac-hero-shell" aria-labelledby="hero-title">

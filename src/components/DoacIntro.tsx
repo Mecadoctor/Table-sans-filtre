@@ -95,7 +95,12 @@ export function DoacIntro() {
         </div>
       </div>
 
-      {/* Comme .container .col-md-7 — texte au-dessus des calques (z-index 12 sur le site) */}
+      {/* Calques type inner-intro-wrap — divs réelles pour éviter les bugs d’empilement avec ::before/::after */}
+      <div className="doac-intro-parallax__shade doac-intro-parallax__shade--mob" aria-hidden />
+      <div className="doac-intro-parallax__shade doac-intro-parallax__shade--desk-left" aria-hidden />
+      <div className="doac-intro-parallax__shade doac-intro-parallax__shade--desk-right" aria-hidden />
+
+      {/* Comme .container .col-md-7 — texte au-dessus des calques */}
       <div className="doac-intro-parallax__container">
         <div className="doac-intro-parallax__content">
           <h2 id="doac-intro-title" className="doac-intro-parallax__title">

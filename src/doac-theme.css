@@ -24,11 +24,6 @@ body:has(.landing--doac)::selection {
   color: #fff;
 }
 
-/* Le hero est en position:fixed ; overflow-x:clip sur .landing découpe tout le viewport → page vide sur certains navigateurs */
-.landing--doac.landing--podcast {
-  overflow-x: visible;
-}
-
 /* --- Nav --- */
 .doac-nav {
   position: fixed;
@@ -347,7 +342,6 @@ body:has(.landing--doac)::selection {
 .doac-intro-parallax {
   position: relative;
   z-index: 4;
-  isolation: isolate;
   min-height: 560px;
   display: flex;
   align-items: center;
@@ -373,40 +367,54 @@ body:has(.landing--doac)::selection {
   }
 }
 
-/* Reprise des dégradés .inner-intro-wrap::before / ::after (main.css DOAC) */
-.doac-intro-parallax::before {
-  content: "";
+/* Fades type inner-intro-wrap (équivalent ::before / ::after) — z-index < texte */
+.doac-intro-parallax__shade--mob {
+  display: block;
   position: absolute;
-  z-index: 10;
-  right: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  z-index: 8;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 100%);
   pointer-events: none;
 }
 
 @media (min-width: 768px) {
-  .doac-intro-parallax::before {
-    width: 70%;
-    background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  .doac-intro-parallax__shade--mob {
+    display: none;
   }
 }
 
-.doac-intro-parallax::after {
-  content: none;
+.doac-intro-parallax__shade--desk-left {
+  display: none;
 }
 
 @media (min-width: 768px) {
-  .doac-intro-parallax::after {
-    content: "";
+  .doac-intro-parallax__shade--desk-left {
+    display: block;
     position: absolute;
-    z-index: 10;
+    z-index: 8;
     left: 0;
     top: 0;
     width: calc(30% + 10px);
     height: 100%;
     background-color: #000;
+    pointer-events: none;
+  }
+}
+
+.doac-intro-parallax__shade--desk-right {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .doac-intro-parallax__shade--desk-right {
+    display: block;
+    position: absolute;
+    z-index: 8;
+    right: 0;
+    top: 0;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
     pointer-events: none;
   }
 }
@@ -541,7 +549,7 @@ body:has(.landing--doac)::selection {
 
 .doac-intro-parallax__container {
   position: relative;
-  z-index: 12;
+  z-index: 20;
   width: 100%;
   max-width: 1140px;
   margin: 0 auto;
