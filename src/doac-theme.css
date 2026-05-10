@@ -695,10 +695,11 @@ body:has(.landing--doac)::selection {
 
 .doac-episode-wrap__heading {
   margin: 0 0 2.5rem;
+  max-width: min(72%, 44rem);
   font-family: var(--doac-font-display);
   font-weight: 400;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  line-height: 1;
+  font-size: clamp(1.55rem, 3.65vw, 2.6rem);
+  line-height: 1.12;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
@@ -845,19 +846,20 @@ body:has(.landing--doac)::selection {
 }
 
 .doac-subscribe__title {
-  margin: 0 0 1rem;
+  margin: 0 auto 1rem;
+  max-width: min(72%, 44rem);
   font-family: var(--doac-font-display);
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  line-height: 1.05;
+  font-size: clamp(1.45rem, 3.4vw, 2.35rem);
+  line-height: 1.12;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
 .doac-subscribe__meta {
   margin: 0 auto 1.75rem;
-  max-width: 36rem;
-  font-size: 1rem;
-  line-height: 1.5;
+  max-width: min(72%, 44rem);
+  font-size: 0.98rem;
+  line-height: 1.58;
   font-weight: 400;
   color: #222;
 }
@@ -896,26 +898,52 @@ body:has(.landing--doac)::selection {
   max-width: 1140px;
 }
 
+.landing--doac .section__header {
+  max-width: min(72%, 44rem);
+}
+
+.landing--doac .section__header--wide {
+  max-width: min(78%, 48rem);
+}
+
 .landing--doac .section__eyebrow--tsf {
   color: var(--doac-accent);
   font-family: var(--doac-font-display);
   letter-spacing: 0.12em;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .landing--doac .section__title--tsf {
   font-family: var(--doac-font-display);
   font-weight: 400;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.05;
+  font-size: clamp(1.55rem, 3.65vw, 2.55rem);
+  line-height: 1.12;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
 }
 
 .landing--doac .section__subtitle {
+  font-size: clamp(0.92rem, 1.65vw, 1.05rem);
+  line-height: 1.58;
   color: rgba(255, 255, 255, 0.78);
   font-weight: 300;
+}
+
+/* Titres sans wrapper .section__inner > .section__header (même colonne qu’intro) */
+.landing--doac #invites > .section__inner > .section__title--tsf,
+.landing--doac #invites > .section__inner > .invites-intro {
+  max-width: min(72%, 44rem);
+}
+
+.landing--doac #booking > .section__inner > div:first-child,
+.landing--doac #faq > .section__inner > div:first-child,
+.landing--doac #proposer > .section__inner > div:first-child:not(.proposer-grid) {
+  max-width: min(72%, 44rem);
+}
+
+.landing--doac .proposer-done {
+  max-width: min(72%, 44rem);
 }
 
 .landing--doac .section__link-all--tsf {
@@ -1379,12 +1407,15 @@ body:has(.landing--doac)::selection {
 
 .landing--doac .footer__brand-tsf {
   font-family: var(--doac-font-display);
-  font-size: 1.35rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+  line-height: 1.14;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .landing--doac .footer__tagline {
+  max-width: min(72%, 44rem);
+  line-height: 1.58;
   color: rgba(255, 255, 255, 0.55);
   font-weight: 300;
 }
