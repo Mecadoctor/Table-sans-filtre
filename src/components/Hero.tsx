@@ -1,5 +1,4 @@
-import { useMemo, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useMemo, useState } from "react";
 import { episodes } from "../data/tsf";
 
 const fallbackThumb =
@@ -8,15 +7,6 @@ const fallbackThumb =
     : "";
 
 export function Hero() {
-  const shellRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: shellRef,
-    offset: ["start start", "end start"],
-  });
-  /** Pendant le premier viewport : le hero se fond en même temps que l’intro le recouvre */
-  const fadeOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-
   const base = import.meta.env.BASE_URL;
   /** GitHub Pages (Linux) est sensible à la casse : essai hero.jpg puis Hero.jpg puis vignette. */
   const urls = useMemo(() => {
@@ -29,16 +19,8 @@ export function Hero() {
   const src = urls[safeIdx] ?? urls[urls.length - 1] ?? "";
 
   return (
-    <section
-      ref={shellRef}
-      className="doac-hero-shell"
-      id="top"
-      aria-labelledby="hero-title"
-    >
-      <motion.div
-        className="doac-hero-fixed"
-        style={{ opacity: reduceMotion ? 1 : fadeOpacity }}
-      >
+    <section className="doac-hero-shell" id="top" aria-labelledby="hero-title">
+      <div className="doac-hero-fixed">
         <img
           className="doac-hero__bg-img"
           src={src}
@@ -61,7 +43,7 @@ export function Hero() {
         <a className="doac-hero__scroll" href="#intro">
           Scroll
         </a>
-      </motion.div>
+      </div>
       <div className="doac-hero-spacer" aria-hidden />
     </section>
   );

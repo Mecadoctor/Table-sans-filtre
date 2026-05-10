@@ -30,6 +30,8 @@ body {
 
 #root {
   min-height: 100vh;
+  /* évite un flash blanc si une couche est transparente avant/après hydratation */
+  background-color: #0b0b0f;
 }
 
 ::selection {
