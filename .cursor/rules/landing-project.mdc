@@ -29,3 +29,4 @@ alwaysApply: true
 ## Utilisateur
 
 - Réponses souvent en **français**.
+- Après une modification de code **terminée et validée** (`npm run build` si pertinent) : **`git commit` + `git push`** sur `main` sauf consigne contraire.
