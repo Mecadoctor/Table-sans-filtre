@@ -1,0 +1,31 @@
+---
+description: Contexte permanent — landing podcast MERIDIEN (Vite, React, Motion, GSAP)
+alwaysApply: true
+---
+
+# MERIDIEN — contexte agent
+
+## Stack
+
+- **Vite 6** + **React 19** + **TypeScript** (`npm run dev` / `npm run build`).
+- **Framer Motion** : navigation, hero (dont `Waveform.tsx`), épisodes, studio, CTA, footer.
+- **GSAP** + **`@gsap/react`** : `ScrollTrigger` dans **`GsapScrollBand.tsx`** (citation au scroll).
+- Styles : **`src/landing.css`** — palette chaude (cuivre / crème sur noir), typo **Fraunces + Outfit** (`index.html`).
+- **Easing Framer** : `src/motionTokens.ts` (`smoothEase`).
+
+## Identité éditoriale
+
+- Marque placeholder **MERIDIEN** — remplacer nom, emails (`contact@meridien.audio`), épisodes et hôtes dans **`Episodes.tsx`**, **`Studio.tsx`**, **`Footer.tsx`**.
+
+## Structure
+
+- `src/components/` — `Nav`, `Hero`, `GsapScrollBand`, `Episodes`, `Studio`, `CTASection`, `Footer`.
+- **`prefers-reduced-motion`** : prévu hero/orbes ; GSAP désactivé dans la bande si réduit.
+
+## Outils Cursor (machine locale)
+
+- MCP / skills : voir **`SETUP_NOUVEL_ORDINATEUR.md`**.
+
+## Utilisateur
+
+- Réponses souvent en **français**.
