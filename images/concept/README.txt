@@ -5,15 +5,15 @@ Emplacement
 Place tes fichiers ICI : public/images/concept/
 Ils sont copiés tels quels dans dist/ au build (GitHub Pages inclus).
 
-Fichiers attendus (noms exacts)
---------------------------------
-  intro.jpg       → 1er écran (doctrine / titre)
-  chapter-01.jpg  → chapitre « Sans filtre »
-  chapter-02.jpg  → chapitre « Humain derrière le titre »
-  chapter-03.jpg  → chapitre « Région & impact »
+Fichiers attendus (noms exacts, minuscules recommandées)
+---------------------------------------------------------
+  intro           → 1er écran (doctrine / titre)
+  chapter-01      → chapitre « Sans filtre »
+  chapter-02      → chapitre « Humain derrière le titre »
+  chapter-03      → chapitre « Région & impact »
 
-Tu peux aussi utiliser .webp avec les MÊMES noms (intro.webp, chapter-01.webp…) :
-dans ce cas, mets à jour les chemins dans src/components/Concept.tsx (constantes BG_*).
+Extensions essayées automatiquement dans l’ordre : .jpeg, .jpg, .webp, .png
+(ex. chapter-01.png fonctionne sans modifier le code.)
 
 Dimensions recommandées
 ------------------------
