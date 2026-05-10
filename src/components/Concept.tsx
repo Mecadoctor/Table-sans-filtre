@@ -41,25 +41,37 @@ const CHAPTERS = [
   },
 ] as const;
 
-function bgUrl(fileBase: string): string {
-  return `${import.meta.env.BASE_URL}images/concept/${fileBase}.jpg`;
-}
+/** Ordre d’essai ; `.jpeg` en premier pour éviter un 404 inutile si tu n’as que des JPEG. */
+const BG_EXT = ["jpeg", "jpg", "webp", "png"] as const;
 
-/** Image plein cadre + voile sombre ; si le fichier manque, fond uni. */
+/** Image plein cadre + voile sombre. Essaie plusieurs extensions + rafraîchit ScrollTrigger au chargement. */
 function ConceptPanelBg({ fileBase }: { fileBase: string }) {
-  const [hideImg, setHideImg] = useState(false);
-  const src = bgUrl(fileBase);
+  const [extIndex, setExtIndex] = useState(0);
+  const [givenUp, setGivenUp] = useState(false);
+  const safeBase = fileBase.toLowerCase();
+  const ext = BG_EXT[Math.min(extIndex, BG_EXT.length - 1)];
+  const src = `${import.meta.env.BASE_URL}images/concept/${safeBase}.${ext}`;
 
   return (
     <div className="concept-hscroll__backdrop">
-      {!hideImg && (
+      {!givenUp && (
         <img
+          key={src}
           src={src}
           alt=""
           className="concept-hscroll__backdrop-img"
-          loading="lazy"
+          loading="eager"
           decoding="async"
-          onError={() => setHideImg(true)}
+          onLoad={() => {
+            ScrollTrigger.refresh();
+          }}
+          onError={() => {
+            setExtIndex((current) => {
+              if (current < BG_EXT.length - 1) return current + 1;
+              queueMicrotask(() => setGivenUp(true));
+              return current;
+            });
+          }}
         />
       )}
       <div className="concept-hscroll__backdrop-scrim" aria-hidden />
