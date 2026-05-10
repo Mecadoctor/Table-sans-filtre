@@ -31,7 +31,10 @@ export function AboutAlex() {
             transition={{ duration: 0.55, ease: smoothEase }}
           >
             <div className="about-photo">
-              <img src="/images/alex.svg" alt="Alex Rizk — La Table Sans Filtre" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/alex.svg`}
+                alt="Alex Rizk — La Table Sans Filtre"
+              />
             </div>
           </motion.div>
           <motion.div
