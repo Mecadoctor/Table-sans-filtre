@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { episodes } from "../data/tsf";
 
 const fallbackThumb = `https://img.youtube.com/vi/${episodes[0].youtubeId}/hqdefault.jpg`;
 
 export function Hero() {
-  const heroUrl = `${import.meta.env.BASE_URL}images/hero.jpg`;
-  const [src, setSrc] = useState(heroUrl);
+  const base = import.meta.env.BASE_URL;
+  /** GitHub Pages (Linux) est sensible à la casse : essai hero.jpg puis Hero.jpg puis vignette. */
+  const urls = useMemo(
+    () => [`${base}images/hero.jpg`, `${base}images/Hero.jpg`, fallbackThumb],
+    [base],
+  );
+  const [idx, setIdx] = useState(0);
+  const src = urls[idx];
 
   return (
     <section className="doac-hero-shell" aria-labelledby="hero-title">
@@ -14,7 +20,7 @@ export function Hero() {
           className="doac-hero__bg-img"
           src={src}
           alt=""
-          onError={() => setSrc((prev) => (prev === fallbackThumb ? prev : fallbackThumb))}
+          onError={() => setIdx((i) => (i < urls.length - 1 ? i + 1 : i))}
         />
         <div className="doac-hero__gradient" aria-hidden />
         <div className="doac-hero__inner">
