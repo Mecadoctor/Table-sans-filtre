@@ -6,6 +6,11 @@ const fallbackThumb =
     ? `https://img.youtube.com/vi/${episodes[0].youtubeId}/hqdefault.jpg`
     : "";
 
+/**
+ * Même principe que stevenbartlett.com/doac/ :
+ * — calque image + voile en position fixed (reste « collé » au viewport)
+ * — titre + lien Scroll dans le flux : ils montent avec le scroll
+ */
 export function Hero() {
   const base = import.meta.env.BASE_URL;
   /** GitHub Pages (Linux) est sensible à la casse : essai hero.jpg puis Hero.jpg puis vignette. */
@@ -20,7 +25,7 @@ export function Hero() {
 
   return (
     <section className="doac-hero-shell" id="top" aria-labelledby="hero-title">
-      <div className="doac-hero-fixed">
+      <div className="doac-hero__fixed-bg">
         <img
           className="doac-hero__bg-img"
           src={src}
@@ -33,6 +38,9 @@ export function Hero() {
           }
         />
         <div className="doac-hero__gradient" aria-hidden />
+      </div>
+
+      <div className="doac-hero__foreground">
         <div className="doac-hero__inner">
           <h1 id="hero-title" className="doac-hero__title">
             LA TABLE
@@ -44,7 +52,6 @@ export function Hero() {
           Scroll
         </a>
       </div>
-      <div className="doac-hero-spacer" aria-hidden />
     </section>
   );
 }
