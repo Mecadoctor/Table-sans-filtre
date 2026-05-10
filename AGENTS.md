@@ -9,7 +9,7 @@ Landing pour **La Table Sans Filtre** — podcast vidéo d’**Alex Rizk** : con
 | Élément | Détail |
 |--------|--------|
 | Build | `npm run dev`, `npm run build`, `npm run verify` |
-| GitHub Pages | Settings → **Pages** → source **GitHub Actions** (pas une branche / racine du repo, sinon `src/main.tsx` en 404) |
+| GitHub Pages | Workflow **Déployer sur GitHub Pages** pousse `dist/` sur la branche **`gh-pages`**. Settings → **Pages** → **Deploy from a branch** → **`gh-pages`** → **`/` (root)**. Si le workflow échoue au push : Settings → **Actions** → **General** → _Workflow permissions_ → **Read and write**. |
 | Données | `src/data/tsf.ts` (guests, episodes, chaîne YouTube) |
 | Animations | Framer Motion + GSAP (`GsapScrollBand.tsx`) |
 | Accès Calendly | `VITE_ACCESS_CODES`, `VITE_CALENDLY_URL` dans `.env.local` — voir `.env.example` |
