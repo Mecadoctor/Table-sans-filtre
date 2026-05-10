@@ -337,69 +337,251 @@ body:has(.landing--doac)::selection {
   transform: rotate(45deg);
 }
 
-/* --- Intro : colonne texte à gauche + grille type DOAC (≈4 vignettes visibles / ligne) --- */
+/*
+ * Intro type DOAC (stevenbartlett.com/doac/) :
+ * — .inner-intro-wrap : fond = .doac-img-wrap (3 rangées, pleine largeur)
+ * — ::before : dégradé sur ~70 % à droite (z-index 10)
+ * — ::after : bande noire solide ~30 % à gauche en desktop (z-index 10)
+ * — texte : .container .col-md-7 → ~58 % max-width, z-index 12
+ */
 .doac-intro-parallax {
   position: relative;
   z-index: 4;
   isolation: isolate;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: clamp(3rem, 10vw, 6rem);
+  padding-bottom: clamp(3rem, 10vw, 6rem);
   background: #000;
   overflow: hidden;
 }
 
+@media (min-width: 768px) {
+  .doac-intro-parallax {
+    flex-wrap: nowrap;
+    min-height: 501px;
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .doac-intro-parallax {
+    min-height: 660px;
+  }
+}
+
+/* Reprise des dégradés .inner-intro-wrap::before / ::after (main.css DOAC) */
 .doac-intro-parallax::before {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 2;
+  z-index: 10;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 100%);
   pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.92) 44%,
-    rgba(0, 0, 0, 0.55) 56%,
-    rgba(0, 0, 0, 0.22) 72%,
-    transparent 88%
-  );
 }
 
-.doac-intro-parallax__layout {
-  position: relative;
-  z-index: 3;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 5vw, 3rem);
-  align-items: center;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: clamp(3rem, 9vw, 5.5rem) clamp(1.25rem, 4vw, 2rem);
-}
-
-@media (min-width: 960px) {
-  .doac-intro-parallax__layout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(1.5rem, 4vw, 3rem);
-    align-items: center;
+@media (min-width: 768px) {
+  .doac-intro-parallax::before {
+    width: 70%;
+    background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
   }
+}
+
+.doac-intro-parallax::after {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .doac-intro-parallax::after {
+    content: "";
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: calc(30% + 10px);
+    height: 100%;
+    background-color: #000;
+    pointer-events: none;
+  }
+}
+
+/* Fond images = .doac-img-wrap */
+.doac-intro-parallax__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+/* Fonds en haut / bas du bloc tuiles (doac-img-wrap::before / ::after) */
+.doac-intro-parallax__bg::before {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 10%, rgba(0, 0, 0, 0) 100%);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .doac-intro-parallax__bg::before {
+    height: 70px;
+    background: linear-gradient(180deg, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0) 100%);
+  }
+}
+
+@media (min-width: 992px) {
+  .doac-intro-parallax__bg::before {
+    height: 180px;
+  }
+}
+
+.doac-intro-parallax__bg::after {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0) 100%);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .doac-intro-parallax__bg::after {
+    height: 70px;
+    background: linear-gradient(0deg, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0) 100%);
+  }
+}
+
+@media (min-width: 992px) {
+  .doac-intro-parallax__bg::after {
+    height: 280px;
+  }
+}
+
+.doac-parallax-band {
+  overflow: hidden;
+  position: relative;
+  height: 128px;
+}
+
+@media (min-width: 768px) {
+  .doac-parallax-band {
+    height: 167px;
+  }
+}
+
+@media (min-width: 992px) {
+  .doac-parallax-band {
+    height: 220px;
+  }
+}
+
+.doac-parallax-band__track {
+  position: absolute;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.doac-parallax-band--row1 .doac-parallax-band__track,
+.doac-parallax-band--row3 .doac-parallax-band__track {
+  left: -100px;
+}
+
+.doac-parallax-band--row2 .doac-parallax-band__track {
+  left: -250px;
+}
+
+.doac-parallax-band__cell {
+  flex: 0 0 auto;
+}
+
+.doac-parallax-band__cell img {
+  display: block;
+  border-radius: 20px;
+  width: 160px;
+  height: 108px;
+  object-fit: cover;
+  background-color: #000;
+  border: solid 1px #444;
+}
+
+@media (min-width: 768px) {
+  .doac-parallax-band__cell img {
+    width: 220px;
+    height: 147px;
+  }
+}
+
+@media (min-width: 992px) {
+  .doac-parallax-band__cell img {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+.doac-intro-parallax__container {
+  position: relative;
+  z-index: 12;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-left: clamp(1.25rem, 4vw, 2rem);
+  padding-right: clamp(1.25rem, 4vw, 2rem);
 }
 
 .doac-intro-parallax__content {
   position: relative;
+  max-width: 58.333333%;
   text-align: left;
-  max-width: 38rem;
+}
+
+@media (max-width: 767px) {
+  .doac-intro-parallax__content {
+    max-width: 100%;
+  }
 }
 
 .doac-intro-parallax__title {
-  margin: 0 0 1.35rem;
+  margin: 0 0 1.25rem;
   font-family: var(--doac-font-display);
   font-weight: 400;
-  font-size: clamp(1.55rem, 3.6vw, 2.65rem);
+  font-size: 2rem;
   line-height: 1.08;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
+  margin-top: 1.875rem;
+}
+
+@media (min-width: 992px) {
+  .doac-intro-parallax__title {
+    font-size: 3.125rem;
+  }
 }
 
 .doac-intro-parallax__brand {
+  font-family: var(--doac-font-display);
+  font-weight: 700;
   color: var(--doac-accent);
 }
 
@@ -408,77 +590,7 @@ body:has(.landing--doac)::selection {
   font-size: clamp(0.92rem, 1.85vw, 1.08rem);
   line-height: 1.55;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.doac-intro-parallax__visual {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(10px, 1.5vw, 14px);
-  min-height: 0;
-  padding: 0.25rem 0;
-}
-
-.doac-parallax-band {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: clamp(10px, 1.2vw, 14px);
-  width: max-content;
-  will-change: transform;
-}
-
-.doac-parallax-band__cell {
-  position: relative;
-  flex: 0 0 auto;
-  /* ~4 vignettes visibles par ligne dans la moitié droite (sans container queries pour compatibilité) */
-  width: clamp(148px, 11vw, 210px);
-  aspect-ratio: 16 / 10;
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-.doac-parallax-band__cell::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(0, 0, 0, 0.38);
-  pointer-events: none;
-}
-
-.doac-parallax-band__cell img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.72);
-}
-
-@media (max-width: 959px) {
-  .doac-intro-parallax::before {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.96) 0%,
-      rgba(0, 0, 0, 0.85) 38%,
-      rgba(0, 0, 0, 0.55) 62%,
-      rgba(0, 0, 0, 0.92) 100%
-    );
-  }
-
-  .doac-intro-parallax__content {
-    max-width: none;
-  }
-
-  .doac-intro-parallax__visual {
-    opacity: 0.92;
-    margin: 0 -0.5rem;
-    padding: 0 0.5rem;
-  }
-
-  .doac-parallax-band__cell {
-    width: clamp(128px, 22vw, 168px);
-  }
+  color: #fff;
 }
 
 /* --- Episode block --- */

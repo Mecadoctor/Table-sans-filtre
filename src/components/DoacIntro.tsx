@@ -46,13 +46,13 @@ export function DoacIntro() {
         gsap.fromTo(row2Ref.current, { x: "12%" }, { x: "-16%", scrollTrigger: st() });
         gsap.fromTo(row3Ref.current, { x: "-10%" }, { x: "12%", scrollTrigger: st() });
       } catch {
-        /* évite un écran blanc si GSAP / ScrollTrigger échoue sur un navigateur */
+        /* ScrollTrigger optionnel */
       }
     },
     { scope: rootRef },
   );
 
-  const seg = 8;
+  const seg = 12;
   const r1 = [...rowCells(0, seg), ...rowCells(0, seg)];
   const r2 = [...rowCells(2, seg), ...rowCells(2, seg)];
   const r3 = [...rowCells(4, seg), ...rowCells(4, seg)];
@@ -64,7 +64,39 @@ export function DoacIntro() {
       id="intro"
       aria-labelledby="doac-intro-title"
     >
-      <div className="doac-intro-parallax__layout">
+      {/* Comme .doac-img-wrap sur stevenbartlett.com : tout le fond = rangées d’images */}
+      <div className="doac-intro-parallax__bg" aria-hidden>
+        <div className="doac-parallax-band doac-parallax-band--row1">
+          <div ref={row1Ref} className="doac-parallax-band__track">
+            {r1.map((t, i) => (
+              <div key={`r1-${t.id}-${i}`} className="doac-parallax-band__cell">
+                <img src={t.src} alt="" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="doac-parallax-band doac-parallax-band--row2">
+          <div ref={row2Ref} className="doac-parallax-band__track">
+            {r2.map((t, i) => (
+              <div key={`r2-${t.id}-${i}`} className="doac-parallax-band__cell">
+                <img src={t.src} alt="" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="doac-parallax-band doac-parallax-band--row3">
+          <div ref={row3Ref} className="doac-parallax-band__track">
+            {r3.map((t, i) => (
+              <div key={`r3-${t.id}-${i}`} className="doac-parallax-band__cell">
+                <img src={t.src} alt="" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Comme .container .col-md-7 — texte au-dessus des calques (z-index 12 sur le site) */}
+      <div className="doac-intro-parallax__container">
         <div className="doac-intro-parallax__content">
           <h2 id="doac-intro-title" className="doac-intro-parallax__title">
             <span className="doac-intro-parallax__brand">La Table Sans Filtre</span> est une conversation sans langue de bois avec des leaders qui façonnent la région — des récits où l’on démonte les angles morts du succès.
@@ -72,30 +104,6 @@ export function DoacIntro() {
           <p className="doac-intro-parallax__subtitle">
             Alex Rizk installe un cadre confiant : pas de posture de façade, du temps pour les idées qui comptent, et des échanges pensés pour nourrir celles et ceux qui construisent au quotidien.
           </p>
-        </div>
-
-        <div className="doac-intro-parallax__visual" aria-hidden>
-          <div ref={row1Ref} className="doac-parallax-band doac-parallax-band--row1">
-            {r1.map((t, i) => (
-              <div key={`r1-${t.id}-${i}`} className="doac-parallax-band__cell">
-                <img src={t.src} alt="" loading="lazy" />
-              </div>
-            ))}
-          </div>
-          <div ref={row2Ref} className="doac-parallax-band doac-parallax-band--row2">
-            {r2.map((t, i) => (
-              <div key={`r2-${t.id}-${i}`} className="doac-parallax-band__cell">
-                <img src={t.src} alt="" loading="lazy" />
-              </div>
-            ))}
-          </div>
-          <div ref={row3Ref} className="doac-parallax-band doac-parallax-band--row3">
-            {r3.map((t, i) => (
-              <div key={`r3-${t.id}-${i}`} className="doac-parallax-band__cell">
-                <img src={t.src} alt="" loading="lazy" />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
