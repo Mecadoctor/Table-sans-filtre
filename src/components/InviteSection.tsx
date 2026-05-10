@@ -1,6 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { smoothEase } from "../motionTokens";
+
+/** URL iframe Calendly (embed_type + embed_domain requis pour beaucoup de domaines). */
+function calendlyEmbedSrc(pageUrl: string): string {
+  try {
+    const u = new URL(pageUrl.trim());
+    if (!u.hostname.endsWith("calendly.com")) return pageUrl.trim();
+    u.searchParams.set("embed_type", "Inline");
+    if (typeof window !== "undefined" && window.location.hostname) {
+      u.searchParams.set("embed_domain", window.location.hostname);
+    }
+    return u.toString();
+  } catch {
+    return pageUrl.trim();
+  }
+}
 
 export function InviteSection() {
   const reduce = useReducedMotion();
@@ -8,6 +23,9 @@ export function InviteSection() {
   const [unlocked, setUnlocked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [justUnlocked, setJustUnlocked] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState("");
+  const calWrapRef = useRef<HTMLDivElement>(null);
 
   const codes = useMemo(() => {
     const raw = import.meta.env.VITE_ACCESS_CODES ?? "";
@@ -23,6 +41,21 @@ export function InviteSection() {
     if (localStorage.getItem("tsf_access") === "true") setUnlocked(true);
   }, []);
 
+  useEffect(() => {
+    if (!calendlyUrl) return;
+    setIframeSrc(calendlyEmbedSrc(calendlyUrl));
+  }, [calendlyUrl]);
+
+  useEffect(() => {
+    if (!justUnlocked || !unlocked || !calendlyUrl || !calWrapRef.current) return;
+    setJustUnlocked(false);
+    const el = calWrapRef.current;
+    const t = window.setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [justUnlocked, unlocked, calendlyUrl]);
+
   function unlock() {
     setErr(null);
     setLoading(true);
@@ -35,10 +68,15 @@ export function InviteSection() {
       }
       localStorage.setItem("tsf_access", "true");
       setUnlocked(true);
+      if (calendlyUrl) setJustUnlocked(true);
     } finally {
       setLoading(false);
     }
   }
+
+  const showCal = unlocked && Boolean(calendlyUrl);
+  /** Masquer le champ code seulement quand le calendrier peut s’afficher. */
+  const showCodeRow = !showCal;
 
   return (
     <section className="section section--tsf" id="booking" aria-labelledby="booking-title">
@@ -62,43 +100,54 @@ export function InviteSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: smoothEase }}
         >
-          <div className="invite-gate__row">
-            <div className="invite-gate__field">
-              <label htmlFor="access-code" className="label-tsf">
-                Code d&apos;accès
-              </label>
-              <input
-                id="access-code"
-                className="input-tsf"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && unlock()}
-                placeholder="Entrez votre code…"
-                autoComplete="off"
-              />
-              <p className="invite-gate__hint">Réservation sur invitation uniquement.</p>
-            </div>
-            <button
-              type="button"
-              className="btn-play btn-play--tsf invite-gate__btn"
-              onClick={unlock}
-              disabled={loading || !code.trim()}
-            >
-              {loading ? "…" : "Déverrouiller"}
-            </button>
-          </div>
-          {err ? (
-            <div className="invite-gate__err" role="alert">
-              {err}
-            </div>
+          {showCodeRow ? (
+            <>
+              <div className="invite-gate__row">
+                <div className="invite-gate__field">
+                  <label htmlFor="access-code" className="label-tsf">
+                    Code d&apos;accès
+                  </label>
+                  <input
+                    id="access-code"
+                    className="input-tsf"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && unlock()}
+                    placeholder="Entrez votre code…"
+                    autoComplete="off"
+                  />
+                  <p className="invite-gate__hint">Réservation sur invitation uniquement.</p>
+                </div>
+                <button
+                  type="button"
+                  className="btn-play btn-play--tsf invite-gate__btn"
+                  onClick={unlock}
+                  disabled={loading || !code.trim()}
+                >
+                  {loading ? "…" : "Déverrouiller"}
+                </button>
+              </div>
+              {err ? (
+                <div className="invite-gate__err" role="alert">
+                  {err}
+                </div>
+              ) : null}
+            </>
           ) : null}
 
           <div className="invite-gate__below">
             {unlocked ? (
               calendlyUrl ? (
-                <div className="invite-cal-wrap">
-                  <iframe title="Calendly" src={calendlyUrl} className="invite-cal-iframe" />
-                </div>
+                <>
+                  <p className="invite-gate__cal-kicker">Choisissez un créneau ci-dessous.</p>
+                  <div ref={calWrapRef} className="invite-cal-wrap">
+                    <iframe
+                      title="Calendly"
+                      src={iframeSrc || calendlyEmbedSrc(calendlyUrl)}
+                      className="invite-cal-iframe"
+                    />
+                  </div>
+                </>
               ) : (
                 <p className="section__subtitle">
                   Calendly non configuré. Ajoutez <code>VITE_CALENDLY_URL</code> dans{" "}

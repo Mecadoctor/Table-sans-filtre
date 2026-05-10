@@ -1556,10 +1556,18 @@
   margin-top: 1.5rem;
 }
 
+.invite-gate__cal-kicker {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .invite-cal-wrap {
   overflow: hidden;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  scroll-margin-top: 5.5rem;
 }
 
 .invite-cal-iframe {
