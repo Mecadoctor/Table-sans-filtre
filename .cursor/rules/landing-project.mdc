@@ -29,4 +29,5 @@ alwaysApply: true
 ## Utilisateur
 
 - Réponses souvent en **français**.
-- Après une modification de code **terminée et validée** (`npm run build` si pertinent) : **`git commit` + `git push`** sur `main` sauf consigne contraire.
+- Avant **`git push`** sur `main` : exécuter **`npm run build`** (build OK + présence de `dist/` avec `index.html` et assets). Ne pas pousser si le build échoue ou si la page n’a pas été vérifiée en **`npm run preview`** au besoin.
+- Après une modification **terminée et validée** : **`git commit` + `git push`** sur `main` sauf consigne contraire.

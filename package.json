@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify": "tsc -b && vite build && node -e \"require('fs').accessSync('dist/index.html'); require('fs').accessSync('dist/assets'); console.log('verify: dist OK');\""
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
