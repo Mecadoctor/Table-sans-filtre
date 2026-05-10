@@ -74,10 +74,6 @@ export function InviteSection() {
     }
   }
 
-  const showCal = unlocked && Boolean(calendlyUrl);
-  /** Masquer le champ code seulement quand le calendrier peut s’afficher. */
-  const showCodeRow = !showCal;
-
   return (
     <section className="section section--tsf" id="booking" aria-labelledby="booking-title">
       <div className="section__inner">
@@ -100,39 +96,39 @@ export function InviteSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: smoothEase }}
         >
-          {showCodeRow ? (
-            <>
-              <div className="invite-gate__row">
-                <div className="invite-gate__field">
-                  <label htmlFor="access-code" className="label-tsf">
-                    Code d&apos;accès
-                  </label>
-                  <input
-                    id="access-code"
-                    className="input-tsf"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && unlock()}
-                    placeholder="Entrez votre code…"
-                    autoComplete="off"
-                  />
-                  <p className="invite-gate__hint">Réservation sur invitation uniquement.</p>
-                </div>
-                <button
-                  type="button"
-                  className="btn-play btn-play--tsf invite-gate__btn"
-                  onClick={unlock}
-                  disabled={loading || !code.trim()}
-                >
-                  {loading ? "…" : "Déverrouiller"}
-                </button>
-              </div>
-              {err ? (
-                <div className="invite-gate__err" role="alert">
-                  {err}
-                </div>
-              ) : null}
-            </>
+          <div className="invite-gate__row">
+            <div className="invite-gate__field">
+              <label htmlFor="access-code" className="label-tsf">
+                Code d&apos;accès
+              </label>
+              <input
+                id="access-code"
+                className="input-tsf"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && unlock()}
+                placeholder="Entrez votre code…"
+                autoComplete="off"
+              />
+              <p className="invite-gate__hint">
+                {unlocked
+                  ? "Code accepté — le calendrier s’affiche sous ce formulaire."
+                  : "Réservation sur invitation uniquement."}
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn-play btn-play--tsf invite-gate__btn"
+              onClick={unlock}
+              disabled={loading || !code.trim()}
+            >
+              {loading ? "…" : "Déverrouiller"}
+            </button>
+          </div>
+          {err ? (
+            <div className="invite-gate__err" role="alert">
+              {err}
+            </div>
           ) : null}
 
           <div className="invite-gate__below">
