@@ -1,9 +1,14 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { CONCEPT_BG_EXTENSIONS, CONCEPT_INTRO_BASE, conceptBackgroundUrl } from "../lib/conceptBg";
+import {
+  CONCEPT_BG_EXTENSIONS,
+  CONCEPT_OPEN_PANEL_ALT_BASES,
+  CONCEPT_OPEN_PANEL_BASE,
+  conceptBackgroundUrl,
+} from "../lib/conceptBg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,11 +47,26 @@ const CHAPTERS = [
   },
 ] as const;
 
-/** Image plein cadre + voile sombre. Essaie plusieurs extensions + rafraîchit ScrollTrigger au chargement. */
-function ConceptPanelBg({ fileBase }: { fileBase: string }) {
-  const [extIndex, setExtIndex] = useState(0);
+/** Image plein cadre + voile sombre. Essaie plusieurs extensions puis slugs alternatifs ; rafraîchit ScrollTrigger au chargement. */
+function ConceptPanelBg({
+  fileBase,
+  alternateSlugs,
+}: {
+  fileBase: string;
+  alternateSlugs?: readonly string[];
+}) {
+  const urls = useMemo(() => {
+    const extra = alternateSlugs ?? [];
+    const slugs = [fileBase.toLowerCase(), ...extra.map((s) => s.toLowerCase())];
+    return slugs.flatMap((slug) =>
+      CONCEPT_BG_EXTENSIONS.map((_, i) => conceptBackgroundUrl(slug, i)),
+    );
+  }, [fileBase, alternateSlugs]);
+
+  const [urlIndex, setUrlIndex] = useState(0);
   const [givenUp, setGivenUp] = useState(false);
-  const src = conceptBackgroundUrl(fileBase, extIndex);
+  const safeIdx = Math.min(urlIndex, Math.max(0, urls.length - 1));
+  const src = urls[safeIdx] ?? "";
 
   return (
     <div className="concept-hscroll__backdrop">
@@ -62,8 +82,8 @@ function ConceptPanelBg({ fileBase }: { fileBase: string }) {
             ScrollTrigger.refresh();
           }}
           onError={() => {
-            setExtIndex((current) => {
-              if (current < CONCEPT_BG_EXTENSIONS.length - 1) return current + 1;
+            setUrlIndex((current) => {
+              if (current < urls.length - 1) return current + 1;
               queueMicrotask(() => setGivenUp(true));
               return current;
             });
@@ -80,13 +100,24 @@ function ConceptScrollFallback() {
     <section className="section section--tsf concept-hscroll concept-hscroll--static" id="concept" aria-labelledby="concept-title">
       <div className="concept-hscroll__static-inner">
         <p className="section__eyebrow section__eyebrow--tsf">Le concept</p>
-        <h2 id="concept-title" className="concept-hscroll__hero-title">
-          <span className="concept-hscroll__hero-line">Une conversation vraie,</span>
-          <span className="concept-hscroll__hero-line concept-hscroll__hero-line--accent">sans PR-talk</span>
-        </h2>
-        <p className="concept-hscroll__hero-lead">
-          Trois axes qui définissent chaque épisode — comme une ligne directrice, sans posture de façade.
-        </p>
+
+        <article className="concept-hscroll__static-card concept-hscroll__static-card--bg concept-hscroll__static-card--open">
+          <ConceptPanelBg fileBase={CONCEPT_OPEN_PANEL_BASE} alternateSlugs={CONCEPT_OPEN_PANEL_ALT_BASES} />
+          <div className="concept-hscroll__static-card-inner">
+            <p className="concept-hscroll__doctrine">Une doctrine de studio</p>
+            <p className="concept-hscroll__doctrine-lead">
+              Trois chapitres — un même credo : podcast, vidéo, région.
+            </p>
+            <h2 id="concept-title" className="concept-hscroll__hero-title">
+              <span className="concept-hscroll__hero-line">Une conversation vraie,</span>
+              <span className="concept-hscroll__hero-line concept-hscroll__hero-line--accent">sans PR-talk</span>
+            </h2>
+            <p className="concept-hscroll__hero-lead">
+              Trois axes qui définissent chaque épisode — comme une ligne directrice, sans posture de façade.
+            </p>
+          </div>
+        </article>
+
         {CHAPTERS.map((x, i) => (
           <article key={x.label} className="concept-hscroll__static-card concept-hscroll__static-card--bg">
             <ConceptPanelBg fileBase={x.bgFile} />
@@ -153,7 +184,7 @@ export function Concept() {
       <div ref={pinRef} className="concept-hscroll__pin">
         <div ref={trackRef} className="concept-hscroll__track">
           <div className="concept-hscroll__panel concept-hscroll__panel--intro">
-            <ConceptPanelBg fileBase={CONCEPT_INTRO_BASE} />
+            <ConceptPanelBg fileBase={CONCEPT_OPEN_PANEL_BASE} alternateSlugs={CONCEPT_OPEN_PANEL_ALT_BASES} />
             <div className="concept-hscroll__panel-stack">
               <div className="concept-hscroll__panel-inner">
                 <p className="concept-hscroll__doctrine">Une doctrine de studio</p>

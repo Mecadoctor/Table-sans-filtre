@@ -7,7 +7,9 @@ Ils sont copiés tels quels dans dist/ au build (GitHub Pages inclus).
 
 Fichiers attendus (noms exacts, minuscules recommandées)
 ---------------------------------------------------------
-  intro           → 1er écran (doctrine / titre)
+  intro           → fond du Hero (haut de page)
+  chapter-5         → 1er panneau du défilement (« Une conversation vraie, sans PR-talk »)
+                      (synonymes essayés : chapter-05, chapter5 — même extensions)
   chapter-01      → chapitre « Sans filtre »
   chapter-02      → chapitre « Humain derrière le titre »
   chapter-03      → chapitre « Région & impact »

@@ -1291,6 +1291,11 @@ body:has(.landing--doac)::selection {
   background: #080808;
 }
 
+.concept-hscroll__static-card--open {
+  margin-top: 1.25rem;
+  min-height: min(72vh, 560px);
+}
+
 .concept-hscroll__static-card-inner {
   position: relative;
   z-index: 1;

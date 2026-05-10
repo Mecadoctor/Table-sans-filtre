@@ -11,7 +11,7 @@ const fallbackThumb =
  * Même principe que stevenbartlett.com/doac/ :
  * — calque image + voile en position fixed (reste « collé » au viewport)
  * — titre + lien Scroll dans le flux : ils montent avec le scroll
- * Fond : même visuel que le panneau intro de la section Concept (`images/concept/intro.*`).
+ * Fond : `images/concept/intro.*` (le 1er panneau Concept utilise `chapter-5.*`).
  */
 export function Hero() {
   const base = import.meta.env.BASE_URL;
