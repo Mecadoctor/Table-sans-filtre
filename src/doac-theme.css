@@ -880,6 +880,193 @@ body:has(.landing--doac)::selection {
   text-transform: uppercase;
 }
 
+/* --- Concept : layout type MadeByCat « Technology solutions » (titre sticky + chapitres empilés) --- */
+.landing--doac .concept-mbc {
+  overflow: visible;
+}
+
+.concept-mbc__wrap {
+  display: grid;
+  gap: 2.5rem;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-left: clamp(1.25rem, 4vw, 2rem);
+  padding-right: clamp(1.25rem, 4vw, 2rem);
+}
+
+@media (min-width: 960px) {
+  .concept-mbc__wrap {
+    grid-template-columns: minmax(240px, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+}
+
+.concept-mbc__head--sticky {
+  position: relative;
+}
+
+@media (min-width: 960px) {
+  .concept-mbc__head--sticky {
+    position: sticky;
+    top: 6.5rem;
+    align-self: start;
+  }
+}
+
+.concept-mbc__eyebrow {
+  margin-bottom: 1rem;
+}
+
+.concept-mbc__title {
+  margin: 0;
+  font-family: var(--doac-font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.concept-mbc__title-line {
+  display: block;
+}
+
+.concept-mbc__title-line--accent {
+  color: var(--doac-accent);
+  margin-top: 0.15em;
+}
+
+.concept-mbc__lead {
+  margin: 1.5rem 0 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  line-height: 1.6;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 28rem;
+}
+
+.concept-mbc__chapters {
+  display: flex;
+  flex-direction: column;
+  perspective: 1200px;
+}
+
+.concept-mbc__chapter {
+  position: sticky;
+  min-height: min(72vh, 520px);
+  margin-bottom: 2.5rem;
+  padding: 2rem 2rem 2.25rem;
+  border-radius: 1.35rem;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 24px 60px -28px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform-origin: center top;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.concept-mbc__chapter:nth-child(1) {
+  top: 5.25rem;
+  z-index: 11;
+}
+
+.concept-mbc__chapter:nth-child(2) {
+  top: 6rem;
+  z-index: 12;
+}
+
+.concept-mbc__chapter:nth-child(3) {
+  top: 6.75rem;
+  z-index: 13;
+  margin-bottom: 6rem;
+}
+
+.concept-mbc__chapter:hover {
+  border-color: rgba(229, 9, 20, 0.35);
+  box-shadow:
+    0 28px 70px -24px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(229, 9, 20, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.concept-mbc__chapter-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.concept-mbc__num {
+  font-family: var(--doac-font-display);
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+.concept-mbc__chapter-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.concept-mbc__chapter-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--doac-font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.concept-mbc__chapter-desc {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 38rem;
+}
+
+.concept-mbc__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+@media (max-width: 959px) {
+  .concept-mbc__chapter {
+    position: relative;
+    top: auto !important;
+    min-height: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .concept-mbc__chapter:nth-child(3) {
+    margin-bottom: 0;
+  }
+}
+
 .landing--doac .guest-card:hover {
   border-color: rgba(229, 9, 20, 0.35);
 }
