@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { smoothEase } from "../motionTokens";
 
 const PILLARS = ["Invités triés sur le volet", "Récits concrets & utiles", "Extraits sociaux percutants"];
 
+/** Fichiers dans `public/images/` — essayés dans l’ordre (photo puis placeholder SVG). */
+const ALEX_IMG_TRIES = ["alex.jpeg", "alex.jpg", "alex.webp", "alex.png", "alex.svg"] as const;
+
 export function AboutAlex() {
   const reduce = useReducedMotion();
+  const base = import.meta.env.BASE_URL;
+  const [imgI, setImgI] = useState(0);
+  const imgSrc = `${base}images/${ALEX_IMG_TRIES[Math.min(imgI, ALEX_IMG_TRIES.length - 1)]}`;
 
   return (
     <section className="section section--tsf" id="hote" aria-labelledby="hote-title">
@@ -32,8 +39,10 @@ export function AboutAlex() {
           >
             <div className="about-photo">
               <img
-                src={`${import.meta.env.BASE_URL}images/alex.svg`}
+                key={imgSrc}
+                src={imgSrc}
                 alt="Alex Rizk — La Table Sans Filtre"
+                onError={() => setImgI((i) => (i < ALEX_IMG_TRIES.length - 1 ? i + 1 : i))}
               />
             </div>
           </motion.div>
