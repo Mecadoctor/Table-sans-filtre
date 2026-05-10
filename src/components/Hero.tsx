@@ -74,12 +74,13 @@ export function Hero() {
       </div>
 
       <div className="doac-hero__foreground">
-        <div className="doac-hero__inner">
-          <h1 id="hero-title" className="doac-hero__title">
-            LA TABLE
-            <br />
-            SANS FILTRE
-          </h1>
+        <div className="doac-hero__main">
+          <div className="doac-hero__copy">
+            <h1 id="hero-title" className="doac-hero__title">
+              <span className="doac-hero__title-line doac-hero__title-line--accent">LA TABLE</span>
+              <span className="doac-hero__title-line">SANS FILTRE</span>
+            </h1>
+          </div>
         </div>
         <a className="doac-hero__scroll" href="#intro">
           Scroll
