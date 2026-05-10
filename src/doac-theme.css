@@ -1,7 +1,7 @@
-/* Style « The Diary of a CEO » — noir + citron #DBFF00, typo condensée + sans léger */
+/* TSF sur fond noir — accents rouges (#e50914), typo condensée */
 
 :root {
-  --doac-lime: #dbff00;
+  --doac-accent: #e50914;
   --doac-black: #000000;
   --doac-gray: #333333;
   --doac-font-display: "Bebas Neue", Impact, sans-serif;
@@ -15,8 +15,8 @@ body:has(.landing--doac) {
 }
 
 body:has(.landing--doac)::selection {
-  background: rgba(219, 255, 0, 0.35);
-  color: #000;
+  background: rgba(229, 9, 20, 0.35);
+  color: #fff;
 }
 
 .landing--doac {
@@ -57,7 +57,7 @@ body:has(.landing--doac)::selection {
 }
 
 .doac-nav__logo span {
-  color: var(--doac-lime);
+  color: var(--doac-accent);
 }
 
 .doac-nav__desktop {
@@ -86,19 +86,19 @@ body:has(.landing--doac)::selection {
   justify-content: center;
   padding: 0.45rem 1.1rem;
   border-radius: 999px;
-  border: 2px solid var(--doac-lime);
+  border: 2px solid var(--doac-accent);
   font-family: var(--doac-font-display);
   font-size: 1rem;
   letter-spacing: 0.04em;
-  color: var(--doac-lime);
+  color: var(--doac-accent);
   text-decoration: none;
   text-transform: uppercase;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .doac-nav__pill:hover {
-  background: var(--doac-lime);
-  color: #000;
+  background: var(--doac-accent);
+  color: #fff;
 }
 
 .doac-nav__burger {
@@ -109,7 +109,7 @@ body:has(.landing--doac)::selection {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--doac-lime);
+  color: var(--doac-accent);
 }
 
 .doac-nav__burger::before,
@@ -210,7 +210,7 @@ body:has(.landing--doac)::selection {
 }
 
 .doac-nav__drawer-inner a:hover {
-  color: var(--doac-lime);
+  color: var(--doac-accent);
 }
 
 @media (min-width: 960px) {
@@ -232,14 +232,28 @@ body:has(.landing--doac)::selection {
   }
 }
 
-/* --- Hero --- */
-.doac-hero {
+/* --- Hero : image fixe au scroll (section suivante passe par-dessus) --- */
+.doac-hero-shell {
   position: relative;
-  min-height: 100svh;
+}
+
+.doac-hero-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.doac-hero-spacer {
+  height: 100svh;
+  width: 100%;
+  pointer-events: none;
 }
 
 .doac-hero__bg-img {
@@ -248,13 +262,19 @@ body:has(.landing--doac)::selection {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
 }
 
 .doac-hero__gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.5) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.78) 28%,
+    rgba(0, 0, 0, 0.5) 55%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
   pointer-events: none;
 }
 
@@ -267,12 +287,17 @@ body:has(.landing--doac)::selection {
 
 .doac-hero__title {
   margin: 0;
-  font-family: var(--doac-font-display);
-  font-size: clamp(3.5rem, 14vw, 11rem);
+  font-family: "Oswald", var(--doac-font-display), sans-serif;
+  font-size: clamp(3.25rem, 13vw, 10rem);
   line-height: 0.92;
-  font-weight: 400;
-  color: var(--doac-lime);
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  color: var(--doac-accent);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 48px rgba(0, 0, 0, 0.95),
+    0 2px 12px rgba(0, 0, 0, 0.85),
+    0 0 1px rgba(0, 0, 0, 1);
 }
 
 .doac-hero__scroll {
@@ -302,108 +327,123 @@ body:has(.landing--doac)::selection {
   width: 22px;
   height: 22px;
   margin-left: -11px;
-  border-right: 2px solid var(--doac-lime);
-  border-bottom: 2px solid var(--doac-lime);
+  border-right: 2px solid var(--doac-accent);
+  border-bottom: 2px solid var(--doac-accent);
   transform: rotate(45deg);
 }
 
-/* --- Intro --- */
-.doac-intro {
+/* --- Intro sous le hero : texte + rangées d’images (scroll parallax horizontal) --- */
+.doac-intro-parallax {
   position: relative;
+  z-index: 4;
+  isolation: isolate;
+  min-height: clamp(560px, 88vh, 880px);
   background: #000;
-}
-
-.doac-intro__shell {
-  position: relative;
-  z-index: 2;
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: clamp(3rem, 8vw, 5rem) 1.5rem 2rem;
-}
-
-.doac-intro__copy {
-  max-width: 52rem;
-}
-
-.doac-intro__title {
-  margin: 0 0 1.25rem;
-  font-family: var(--doac-font-display);
-  font-weight: 400;
-  font-size: clamp(1.75rem, 4.5vw, 3.15rem);
-  line-height: 1.05;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-.doac-intro__brand {
-  font-weight: 400;
-  color: var(--doac-lime);
-}
-
-.doac-intro__lead {
-  margin: 0;
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  line-height: 1.55;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.doac-tiles {
   overflow: hidden;
-  padding-bottom: clamp(2rem, 5vw, 3.5rem);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
-.doac-tiles__track {
+.doac-intro-parallax::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 0.88) 38%, rgba(0, 0, 0, 0.45) 68%, rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
+}
+
+.doac-intro-parallax__bands {
+  position: absolute;
+  top: 50%;
+  right: -8%;
+  transform: translateY(-50%);
+  width: min(72vw, 920px);
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1;
+}
+
+.doac-parallax-band {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
   width: max-content;
-  animation: doac-marquee 48s linear infinite;
+  will-change: transform;
 }
 
-@keyframes doac-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .doac-tiles__track {
-    animation: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-  }
-}
-
-.doac-tiles__cell {
+.doac-parallax-band__cell {
   flex: 0 0 auto;
-  width: 140px;
-  height: 88px;
+  width: 132px;
+  height: 84px;
   border-radius: 14px;
   overflow: hidden;
   opacity: 0.95;
 }
 
-.doac-tiles__cell img {
+.doac-parallax-band__cell img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-@media (min-width: 768px) {
-  .doac-tiles__cell {
-    width: 180px;
-    height: 112px;
+.doac-intro-parallax__content {
+  position: relative;
+  z-index: 3;
+  margin: 0 auto;
+  padding: clamp(3rem, 9vw, 5.5rem) 1.5rem clamp(3rem, 8vw, 5rem);
+  max-width: min(52rem, 92vw);
+}
+
+.doac-intro-parallax__title {
+  margin: 0 0 1.35rem;
+  font-family: var(--doac-font-display);
+  font-weight: 400;
+  font-size: clamp(1.65rem, 4.2vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.doac-intro-parallax__brand {
+  color: var(--doac-accent);
+}
+
+.doac-intro-parallax__subtitle {
+  margin: 0;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  line-height: 1.55;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 767px) {
+  .doac-intro-parallax__bands {
+    top: 22%;
+    right: -12%;
+    width: 110%;
+    opacity: 0.55;
+  }
+
+  .doac-intro-parallax::before {
+    background: linear-gradient(
+      185deg,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.82) 42%,
+      rgba(0, 0, 0, 0.94) 100%
+    );
+  }
+
+  .doac-parallax-band__cell {
+    width: 112px;
+    height: 72px;
   }
 }
 
 /* --- Episode block --- */
 .doac-episode-wrap {
+  position: relative;
+  z-index: 3;
   background: #000;
   padding: 2rem 0 4rem;
 }
@@ -456,7 +496,7 @@ body:has(.landing--doac)::selection {
   width: 52px;
   height: 52px;
   margin: -26px 0 0 -26px;
-  background: var(--doac-lime);
+  background: var(--doac-accent);
   border-radius: 50%;
   opacity: 0.85;
   transition: width 0.35s ease, height 0.35s ease, margin 0.35s ease;
@@ -474,7 +514,7 @@ body:has(.landing--doac)::selection {
   margin: -10px 0 0 -6px;
   border-style: solid;
   border-width: 10px 0 10px 16px;
-  border-color: transparent transparent transparent #000;
+  border-color: transparent transparent transparent #fff;
   pointer-events: none;
 }
 
@@ -536,7 +576,7 @@ body:has(.landing--doac)::selection {
   font-size: clamp(1.15rem, 2.5vw, 1.5rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--doac-lime);
+  color: var(--doac-accent);
   text-decoration: none;
   padding-right: 1.5rem;
   background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
@@ -549,6 +589,8 @@ body:has(.landing--doac)::selection {
 
 /* --- Subscribe --- */
 .doac-subscribe {
+  position: relative;
+  z-index: 3;
   padding: 2rem 1.25rem 4rem;
   background: #000;
 }
@@ -600,11 +642,13 @@ body:has(.landing--doac)::selection {
 
 .doac-subscribe__btn:hover {
   background: #000;
-  color: var(--doac-lime);
+  color: var(--doac-accent);
 }
 
 /* --- Sections TSF overrides --- */
 .landing--doac .section--tsf {
+  position: relative;
+  z-index: 3;
   padding: clamp(3rem, 8vw, 5rem) 0;
   background: #000;
 }
@@ -614,7 +658,7 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .section__eyebrow--tsf {
-  color: var(--doac-lime);
+  color: var(--doac-accent);
   font-family: var(--doac-font-display);
   letter-spacing: 0.12em;
   font-size: 0.75rem;
@@ -636,7 +680,7 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .section__link-all--tsf {
-  color: var(--doac-lime);
+  color: var(--doac-accent);
 }
 
 .landing--doac .card-tsf {
@@ -646,7 +690,7 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .concept-card:hover {
-  border-color: rgba(219, 255, 0, 0.45);
+  border-color: rgba(229, 9, 20, 0.45);
 }
 
 .landing--doac .concept-card__title {
@@ -656,12 +700,12 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .guest-card:hover {
-  border-color: rgba(219, 255, 0, 0.35);
+  border-color: rgba(229, 9, 20, 0.35);
 }
 
 .landing--doac .filter-chip--on {
-  border-color: var(--doac-lime);
-  color: var(--doac-lime);
+  border-color: var(--doac-accent);
+  color: var(--doac-accent);
 }
 
 .landing--doac .input-tsf,
@@ -676,12 +720,12 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .btn-play--tsf {
-  background: linear-gradient(135deg, var(--doac-lime), #c8ef20);
-  color: #000;
+  background: linear-gradient(135deg, var(--doac-accent), #ff4a52);
+  color: #fff;
   font-family: var(--doac-font-display);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  box-shadow: 0 14px 44px -14px rgba(219, 255, 0, 0.45);
+  box-shadow: 0 14px 44px -14px rgba(229, 9, 20, 0.45);
 }
 
 .landing--doac .btn-play--tsf:hover {
@@ -689,12 +733,14 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .invite-gate__err {
-  border-color: rgba(219, 255, 0, 0.4);
-  background: rgba(219, 255, 0, 0.08);
+  border-color: rgba(229, 9, 20, 0.45);
+  background: rgba(229, 9, 20, 0.12);
 }
 
 /* Footer DOAC-like */
 .landing--doac .footer--tsf {
+  position: relative;
+  z-index: 3;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding: 2.5rem 1.5rem 3rem;
   background: #000;
@@ -721,5 +767,5 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac .footer__links-tsf a:hover {
-  color: var(--doac-lime);
+  color: var(--doac-accent);
 }
