@@ -236,7 +236,7 @@ body:has(.landing--doac)::selection {
   }
 }
 
-/* --- Hero : pleine hauteur, défile avec la page (Scroll monte avec la section) — sans voile noir --- */
+/* --- Hero : pleine hauteur, défile avec la page — voile sombre sur la photo --- */
 .doac-hero {
   position: relative;
   z-index: 1;
@@ -261,6 +261,20 @@ body:has(.landing--doac)::selection {
   object-position: center center;
 }
 
+.doac-hero__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.78) 28%,
+    rgba(0, 0, 0, 0.5) 55%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  pointer-events: none;
+}
+
 .doac-hero__inner {
   position: relative;
   z-index: 2;
@@ -274,15 +288,12 @@ body:has(.landing--doac)::selection {
   font-size: clamp(3.25rem, 13vw, 10rem);
   line-height: 0.92;
   font-weight: 700;
-  color: var(--doac-accent);
+  color: #fff;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.45);
-  paint-order: stroke fill;
   text-shadow:
-    0 0 28px rgba(255, 255, 255, 0.25),
-    0 2px 18px rgba(0, 0, 0, 0.75),
-    0 0 3px rgba(0, 0, 0, 0.95);
+    0 2px 28px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .doac-hero__scroll {

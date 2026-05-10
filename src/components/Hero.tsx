@@ -31,6 +31,7 @@ export function Hero() {
           })
         }
       />
+      <div className="doac-hero__gradient" aria-hidden />
       <div className="doac-hero__inner">
         <h1 id="hero-title" className="doac-hero__title">
           LA TABLE
