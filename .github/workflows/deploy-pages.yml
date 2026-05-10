@@ -1,3 +1,6 @@
+# Déploie le dossier dist/ produit par Vite.
+# Réglages du dépôt → Pages → Build and deployment → Source : « GitHub Actions »
+# (pas « Deploy from a branch », sinon la racine du repo sert index.html avec /src/main.tsx → 404).
 name: Déployer sur GitHub Pages
 
 on:
