@@ -1080,8 +1080,9 @@ body:has(.landing--doac)::selection {
   margin: 0;
   font-family: var(--doac-font-display);
   font-weight: 400;
-  font-size: clamp(2.25rem, 7vw, 5rem);
-  line-height: 0.98;
+  /* Même ordre de grandeur que les blocs chapitre (kicker + titres), moins massif qu’avant */
+  font-size: clamp(1.5rem, 4.2vw, 2.85rem);
+  line-height: 1.06;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
@@ -1092,8 +1093,8 @@ body:has(.landing--doac)::selection {
 }
 
 .concept-hscroll__hero-line--accent {
-  margin-top: 0.12em;
-  padding: 0.08em 0.35em 0.12em;
+  margin-top: 0.1em;
+  padding: 0.06em 0.3em 0.1em;
   background: rgba(110, 75, 45, 0.55);
   color: #fff;
   width: fit-content;
