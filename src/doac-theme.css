@@ -896,13 +896,25 @@ body:has(.landing--doac)::selection {
   background: #000;
 }
 
-/* Aperçu Invités : bande claire */
+/* Aperçu Invités : bande rouge, textes blancs */
 .landing--doac #invites-preview.section--tsf {
-  background: #ffffff;
+  background: var(--doac-accent);
 }
 
 .landing--doac #invites-preview .section__title--tsf {
-  color: #111;
+  color: #fff;
+}
+
+.landing--doac #invites-preview .section__eyebrow--tsf {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.landing--doac #invites-preview .section__link-all--tsf {
+  color: #fff;
+}
+
+.landing--doac #invites-preview .section__link-all--tsf:hover {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .landing--doac .section__inner {
@@ -1379,9 +1391,9 @@ body:has(.landing--doac)::selection {
 }
 
 .landing--doac #invites-preview .guest-card:hover {
-  border-color: rgba(229, 9, 20, 0.45);
+  border-color: rgba(255, 255, 255, 0.55);
   background: #fff;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
 }
 
 .landing--doac #invites-preview .guest-card__thumb {
