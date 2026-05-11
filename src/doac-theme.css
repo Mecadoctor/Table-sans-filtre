@@ -814,19 +814,19 @@ body:has(.landing--doac)::selection {
 
 .doac-episode__btn {
   font-family: var(--doac-font-display);
-  font-weight: 400;
+  font-weight: 700;
   font-size: clamp(1.15rem, 2.5vw, 1.5rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--doac-accent);
   text-decoration: none;
   padding-right: 1.5rem;
-  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
-  transition: opacity 0.2s ease;
+  background: none;
+  transition: color 0.2s ease;
 }
 
 .doac-episode__btn:hover {
-  opacity: 0.85;
+  color: #fff;
 }
 
 /* --- Subscribe --- */
