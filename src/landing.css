@@ -1552,6 +1552,26 @@
   color: #fff;
 }
 
+.invite-gate__session-note {
+  margin: 0.75rem 0 0;
+}
+
+.invite-gate__reset {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.invite-gate__reset:hover {
+  color: #fff;
+}
+
 .invite-gate__below {
   margin-top: 1.5rem;
 }

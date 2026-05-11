@@ -17,29 +17,46 @@ function calendlyEmbedSrc(pageUrl: string): string {
   }
 }
 
+function parseAccessCodes(): string[] {
+  const raw = import.meta.env.VITE_ACCESS_CODES ?? "";
+  return raw
+    .split(",")
+    .map((c) => c.trim())
+    .filter(Boolean);
+}
+
+/** Déverrouillage uniquement si des codes sont configurés ; sinon on purge un vieux localStorage. */
+function readInitialUnlocked(codes: string[]): boolean {
+  if (codes.length === 0) {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.removeItem("tsf_access");
+      } catch {
+        /* ignore */
+      }
+    }
+    return false;
+  }
+  if (typeof window === "undefined") return false;
+  try {
+    return localStorage.getItem("tsf_access") === "true";
+  } catch {
+    return false;
+  }
+}
+
 export function InviteSection() {
   const reduce = useReducedMotion();
+  const codes = useMemo(() => parseAccessCodes(), []);
   const [code, setCode] = useState("");
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(() => readInitialUnlocked(codes));
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [justUnlocked, setJustUnlocked] = useState(false);
   const [iframeSrc, setIframeSrc] = useState("");
   const calWrapRef = useRef<HTMLDivElement>(null);
 
-  const codes = useMemo(() => {
-    const raw = import.meta.env.VITE_ACCESS_CODES ?? "";
-    return raw
-      .split(",")
-      .map((c) => c.trim())
-      .filter(Boolean);
-  }, []);
-
   const calendlyUrl = import.meta.env.VITE_CALENDLY_URL ?? "";
-
-  useEffect(() => {
-    if (localStorage.getItem("tsf_access") === "true") setUnlocked(true);
-  }, []);
 
   useEffect(() => {
     if (!calendlyUrl) return;
@@ -56,6 +73,16 @@ export function InviteSection() {
     return () => window.clearTimeout(t);
   }, [justUnlocked, unlocked, calendlyUrl]);
 
+  function resetAccess() {
+    try {
+      localStorage.removeItem("tsf_access");
+    } catch {
+      /* ignore */
+    }
+    setUnlocked(false);
+    setErr(null);
+  }
+
   function unlock() {
     setErr(null);
     setLoading(true);
@@ -64,6 +91,11 @@ export function InviteSection() {
       if (!ok) {
         setErr("Code invalide.");
         setUnlocked(false);
+        try {
+          localStorage.removeItem("tsf_access");
+        } catch {
+          /* ignore */
+        }
         return;
       }
       localStorage.setItem("tsf_access", "true");
@@ -112,7 +144,7 @@ export function InviteSection() {
               />
               <p className="invite-gate__hint">
                 {unlocked
-                  ? "Code accepté — le calendrier s’affiche sous ce formulaire."
+                  ? "Accès actif sur ce navigateur (mémorisé). Utilisez le lien sous le bloc pour tout réinitialiser."
                   : "Réservation sur invitation uniquement."}
               </p>
             </div>
@@ -129,6 +161,14 @@ export function InviteSection() {
             <div className="invite-gate__err" role="alert">
               {err}
             </div>
+          ) : null}
+
+          {unlocked && codes.length > 0 ? (
+            <p className="invite-gate__session-note">
+              <button type="button" className="invite-gate__reset" onClick={resetAccess}>
+                Masquer le calendrier sur cet appareil
+              </button>
+            </p>
           ) : null}
 
           <div className="invite-gate__below">

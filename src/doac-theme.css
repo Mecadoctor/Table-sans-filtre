@@ -1396,6 +1396,14 @@ body:has(.landing--doac)::selection {
   background: rgba(229, 9, 20, 0.12);
 }
 
+.landing--doac .invite-gate__reset {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.landing--doac .invite-gate__reset:hover {
+  color: var(--doac-accent);
+}
+
 /* Footer DOAC-like */
 .landing--doac .footer--tsf {
   position: relative;
