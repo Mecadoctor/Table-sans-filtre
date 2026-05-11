@@ -321,9 +321,18 @@ body:has(.landing--doac)::selection {
   color: #fff;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  /* Relief 3D statique (ombres en em → suit la taille du clamp), sans toucher au flux / animations */
   text-shadow:
-    0 2px 28px rgba(0, 0, 0, 0.55),
-    0 1px 2px rgba(0, 0, 0, 0.6);
+    -0.03em -0.03em 0 rgba(255, 255, 255, 0.2),
+    0.03em 0.03em 0 #5c5c5c,
+    0.06em 0.06em 0 #454545,
+    0.09em 0.09em 0 #2f2f2f,
+    0.12em 0.12em 0 #1f1f1f,
+    0.15em 0.15em 0 #121212,
+    0.18em 0.18em 0 #0a0a0a,
+    0.21em 0.22em 0.05em rgba(0, 0, 0, 0.65),
+    0 0.08em 0.45em rgba(0, 0, 0, 0.55),
+    0 0 1.2em rgba(0, 0, 0, 0.35);
 }
 
 .doac-hero__scroll {
