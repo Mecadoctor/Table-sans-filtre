@@ -1080,8 +1080,8 @@ body:has(.landing--doac)::selection {
   margin: 0;
   font-family: var(--doac-font-display);
   font-weight: 400;
-  /* Même ordre de grandeur que les blocs chapitre (kicker + titres), moins massif qu’avant */
-  font-size: clamp(1.5rem, 4.2vw, 2.85rem);
+  /* Un peu au-dessus de la version compacte, sans revenir au plein format hero */
+  font-size: clamp(1.75rem, 4.85vw, 3.35rem);
   line-height: 1.06;
   letter-spacing: 0.02em;
   text-transform: uppercase;
