@@ -35,6 +35,8 @@ jobs:
 
       - run: npm run build
         env:
+          # Domaine perso : assets à la racine (sinon page blanche avec /Table-sans-filtre/)
+          VITE_SITE_BASE: /
           VITE_ACCESS_CODES: TSF2026
           VITE_CALENDLY_URL: https://calendly.com/wenov/la_table_sans_filtre?back=1
 
@@ -45,8 +47,8 @@ jobs:
             echo "::error title=Build invalide::dist/index.html contient encore l'entrée Vite dev"
             exit 1
           fi
-          if ! grep -q '/Table-sans-filtre/assets/' dist/index.html; then
-            echo "::error title=Build invalide::aucun script /Table-sans-filtre/assets/ dans index.html"
+          if ! grep -qE '(/Table-sans-filtre/assets/|"/assets/)' dist/index.html; then
+            echo "::error title=Build invalide::aucun bundle assets détecté dans dist/index.html"
             exit 1
           fi
           echo "OK — bundle prod détecté"
